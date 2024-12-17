@@ -21,7 +21,7 @@
 
 Для **YouTube** с указанным временем показа
 ```HTML
-<a href="https://youtu.be/94Y9gMF-qL0&t=1505" class="iPop-video"></a>
+<a href="https://youtu.be/94Y9gMF-qL0?si=sd-uIzMruopssG-s&t=445" class="iPop-video"></a>
 ```
 Для **RuTube** превью забирается автоматически
  ```HTML
