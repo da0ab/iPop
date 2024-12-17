@@ -216,7 +216,7 @@ function iPop() {
     this.iPopNextPrevItem = function(el, isNext) {
         let group = el.getAttribute('data-iPop-group');
         let targetIndex;
-        let groups = document.querySelectorAll(`.iPop[data-ipop-group="${group}"]`);
+        let groups = document.querySelectorAll(`.iPop[data-iPop-group="${group}"]`);
         for (let i = 0; i < groups.length; i++) {
             let current = groups[i];
             if (current.getAttribute('href') == el.getAttribute('href')) {
@@ -262,7 +262,7 @@ function iPop() {
             let urlObj = new URL(url);
             let idYoutube = urlObj.hostname === 'youtu.be' ? urlObj.pathname.replace('/', '') : urlObj.searchParams.get('v');
             if (idYoutube) {
-                let theImg = element.classList.contains("Mini")
+                let theImg = element.classList.contains("Ytube-mini")
                     ? `https://img.youtube.com/vi/${idYoutube}/mqdefault.jpg`
                     : `https://img.youtube.com/vi/${idYoutube}/maxresdefault.jpg`;
                 element.innerHTML += `<img src="${theImg}" alt="YouTube Preview">`;
