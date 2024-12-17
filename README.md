@@ -38,6 +38,14 @@
 
 ### iPop-img
 
+```HTML
+<a href="images/photo/01.jpg" class="iPop" ><img src="images/photo/t/01.jpg" alt="" title="Я не в группе"></a>
+```
+
+```HTML                    
+<a href="images/photo/02.jpg" class="iPop" data-iPop-group="group1"><img src="images/photo/t/02.jpg" alt="" title=""></a>
+<a href="images/photo/03.jpg" class="iPop" data-iPop-group="group1"><img src="images/photo/t/03.jpg" alt="" title=""></a>
+```
 
 ### iPop-frame
 
