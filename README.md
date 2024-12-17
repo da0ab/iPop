@@ -39,14 +39,28 @@
 ### iPop-img
 
 ```HTML
-<a href="images/photo/01.jpg" class="iPop" ><img src="images/photo/t/01.jpg" alt="" title="Я не в группе"></a>
+ <a href="images/photo/01.jpg" class="iPop" ><img src="images/photo/t/01.jpg" alt="" title="Я не в группе"></a>
 ```
 
+data-iPop-group="group1" для создания групп изображений
+
 ```HTML                    
-<a href="images/photo/02.jpg" class="iPop" data-iPop-group="group1"><img src="images/photo/t/02.jpg" alt="" title=""></a>
-<a href="images/photo/03.jpg" class="iPop" data-iPop-group="group1"><img src="images/photo/t/03.jpg" alt="" title=""></a>
+ <a href="images/photo/02.jpg" class="iPop" data-iPop-group="group1"><img src="images/photo/t/02.jpg" alt="" title=""></a>
+ <a href="images/photo/03.jpg" class="iPop" data-iPop-group="group1"><img src="images/photo/t/03.jpg" alt="" title=""></a>
 ```
 
 ### iPop-frame
 
+```HTML 
+<a href="https://api-maps.yandex.ru/frame/" class="iPop-iframe">Яндекс карты</a>
+```
+
+
 ### iPop-up
+
+```HTML 
+<a href="#id-1" frameborder="0" class="iPop-up">Ссылка на окно #id-1</a>                    
+<div class="iPop-up-data" id="id-1">
+  <p>Содержимое всплывающего окна</p> 
+</div>
+```
