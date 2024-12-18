@@ -25,11 +25,11 @@
 ```
 Для **RuTube** превью забирается автоматически
  ```HTML
-<a href="https://rutube.ru/video/c5ae772548357e2d2bd083c239da7092/?r=wd" class="iPop-video"></a>
+<a href="https://rutube.ru/video/35f549128069e557ddadd549b014ca84/?r=wd" class="iPop-video"></a>
 ```
 **VK-видео** превью устанавливается в ручную
 ```HTML
-<a href="https://vk.com/video-26555975_456240213" class="iPop-video"><img src="images/vk.jpg" alt="" title=""></a>
+<a href="https://vk.com/video-119098218_456239140" class="iPop-video"><img src="https://images.placeholders.dev/?width=1280&height=720" alt="" title=""></a>
 ```
 
 ### iPop-img
