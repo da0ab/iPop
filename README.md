@@ -9,27 +9,21 @@
 
 Для **YouTube** и **RuTube** - если внутри ссылки свое изображение то превью не генериться
 
-Для **YouTube** превью забирается автоматически
+Для **YouTube** превью забирается автоматически, класс Ytube-mini забирает малое превью, поддерживается указание времени начала показа формата &t=445
 ```HTML
 <a href="https://youtu.be/94Y9gMF-qL0" class="iPop-video"></a>
-```
-
-Для **YouTube** дополнительный класс Ytube-mini для использования мелкого автоматического превью
-```HTML
 <a href="https://youtu.be/94Y9gMF-qL0" class="iPop-video Ytube-mini"></a>
-```
-
-Для **YouTube** с указанным временем показа
-```HTML
 <a href="https://youtu.be/94Y9gMF-qL0?si=sd-uIzMruopssG-s&t=445" class="iPop-video"></a>
 ```
-Для **RuTube** превью забирается автоматически
+
+Для **RuTube** превью забирается автоматически, поддерживается указание времени начала показа формата /?t=90
  ```HTML
 <a href="https://rutube.ru/video/35f549128069e557ddadd549b014ca84/?r=wd" class="iPop-video"></a>
+<a href="https://rutube.ru/video/35f549128069e557ddadd549b014ca84/?t=90" class="iPop-video"></a>
 ```
-**VK-видео** превью устанавливается в ручную
+**VK-видео** превью устанавливается в ручную,  поддерживается указание времени начала показа формата ?start=90
 ```HTML
-<a href="https://vk.com/video-119098218_456239140" class="iPop-video"><img src="https://images.placeholders.dev/?width=1280&height=720" alt="" title=""></a>
+<a href="https://vk.com/video-119098218_456239140?start=90" class="iPop-video"><img src="https://images.placeholders.dev/?width=1280&height=720" alt="" title=""></a>
 ```
 
 ### iPop-img
