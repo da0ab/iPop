@@ -20,7 +20,7 @@ function iPop() {
     let ip = this;
 
     this.init = function() {
-        let iPopElements = document.querySelectorAll('.iPop, .iPop-video, .iPop-iframe');
+        let iPopElements = document.querySelectorAll('.iPop-img, .iPop-video, .iPop-iframe');
         for (let i = 0; i < iPopElements.length; i++) {
             let element = iPopElements[i];
             ip.generatePreview(element);
@@ -46,7 +46,7 @@ function iPop() {
         let iPopImg = document.querySelector('.iPopImg');
         if (!iPopImg) return;
         let iPopImgSrc = iPopImg.getAttribute('src');
-        let nextPrevItem = document.querySelector(`.iPop[href="${iPopImgSrc}"]`);
+        let nextPrevItem = document.querySelector(`.iPop-img[href="${iPopImgSrc}"]`);
         if (e.keyCode === 39) { // Next
             ip.iPopNextPrevItem(nextPrevItem, true);
         }
@@ -65,7 +65,7 @@ function iPop() {
         if (contentDiv) {
             let html = `<div class="iPopOverlay active">
                 <button type="button" class="closeIpop" title="Close"></button>
-                <div class="iPopFrame iPopIframeWrap">${contentDiv.outerHTML}</div>
+                <div class="iPopFrame">${contentDiv.outerHTML}</div>
             </div>`;
 
             let fragment = document.createRange().createContextualFragment(html);
@@ -99,7 +99,7 @@ function iPop() {
             hasSelf = false;
         }
         if (hasSelf) {
-            iPopClass = el.getAttribute('data-ipop-class') ? el.getAttribute('data-ipop-class') : '';
+            iPopClass = el.getAttribute('data-iPop-class') ? el.getAttribute('data-iPop-class') : '';
             url = el.getAttribute('href');
         }
         html = document.createRange().createContextualFragment(`<div class="iPopOverlay">
@@ -138,12 +138,10 @@ function iPop() {
         if (hasSelf) {
             if (el.classList.contains('iPop-iframe')) {
                 // Direct iframe handling
-                iPopFrame.classList.add('iPopIframeWrap');
-                iPopFrame.innerHTML = `<iframe src="${url}" frameborder="0" allow="autoplay; encrypted-media; fullscreen;" class="iPopIframe"></iframe>`;
+                iPopFrame.innerHTML = `<iframe src="${url}" frameborder="0" allow="autoplay; encrypted-media; fullscreen;"></iframe>`;
             } else {
                 let service = VideoService.detectService(url);
                 if (service !== "Unknown") { // Video
-                    iPopFrame.classList.add('iPopIframeWrap');
                     if (service === VideoService.YOUTUBE) {
                         let urlObj = new URL(url);
                         let youtube_id = '';
@@ -174,27 +172,24 @@ function iPop() {
                         url = `https://rutube.ru/play/embed/${new URL(url).pathname.split('/')[2]}`;
                     }
 
-                    iPopFrame.innerHTML = `<iframe src="${url}" frameborder="0" allow="autoplay; encrypted-media; fullscreen;" class="iPopIframe"></iframe>`;
+                    iPopFrame.innerHTML = `<iframe src="${url}" frameborder="0" allow="autoplay; encrypted-media; fullscreen;"></iframe>`;
                 } else if (url.indexOf('#') == -1) { // Image
-                    iPopFrame.classList.add('iPopImgWrap');
-                    if (placeHolderEl) {
-                        placeHolderEl.parentNode.removeChild(placeHolderEl);
-                    }
+
 
                     let iPopImg = document.querySelector('.iPopImg');
                     if (iPopImg) {
-                        iPopFrame.appendChild(document.createRange().createContextualFragment('<div class="iPopLoaderWrap"><div class="iPopLoader"></div></div>'));
+                        iPopFrame.appendChild(document.createRange().createContextualFragment('<div class="iPopLoader"></div>'));
                     } else {
-                        iPopFrame.appendChild(document.createRange().createContextualFragment('<div style="text-align:center;"><div class="iPopLoader"></div></div>'));
+                        iPopFrame.appendChild(document.createRange().createContextualFragment('<div class="iPopLoader"></div>'));
                     }
 
                     let img = new Image();
                     img.src = url;
                     img.className = 'iPopImg';
                     img.onload = function() {
-                        let code = `<div class="iPopImgZoom"><img src="${url}" alt="" class="iPopImg"></div>`;
+                        let code = `<img src="${url}" alt="" class="iPopImg">`;
                         let group = el.getAttribute('data-iPop-group');
-                        if (group && document.querySelector(`.iPop[data-ipop-group="${group}"]`)) {
+                        if (group && document.querySelector(`.iPop-img[data-iPop-group="${group}"]`)) {
                             code = `<button type="button" class="iPopNextImg" title="Next"></button>${code}<button type="button" class="iPopPrevImg" title="Prev"></button>`;
                         }
                         iPopFrame.innerHTML = code;
@@ -216,7 +211,7 @@ function iPop() {
     this.iPopNextPrevItem = function(el, isNext) {
         let group = el.getAttribute('data-iPop-group');
         let targetIndex;
-        let groups = document.querySelectorAll(`.iPop[data-iPop-group="${group}"]`);
+        let groups = document.querySelectorAll(`.iPop-img[data-iPop-group="${group}"]`);
         for (let i = 0; i < groups.length; i++) {
             let current = groups[i];
             if (current.getAttribute('href') == el.getAttribute('href')) {
@@ -279,7 +274,7 @@ function iPop() {
 
 document.addEventListener('DOMContentLoaded', function() {
     let myIpop;
-    if (document.querySelector('.iPop, .iPop-video, .iPop-iframe')) {
+    if (document.querySelector('.iPop-img, .iPop-video, .iPop-iframe')) {
         myIpop = new iPop();
         myIpop.init();
     }
