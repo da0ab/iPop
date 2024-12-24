@@ -169,9 +169,15 @@ function iPop() {
                             url = vk_url;
                         }
                     } else if (service === VideoService.RUTUBE) { // RuTube
-                        url = `https://rutube.ru/play/embed/${new URL(url).pathname.split('/')[2]}`;
-                    }
+                        let urlObj = new URL(url);
+                        let videoId = urlObj.pathname.split('/').filter(Boolean).pop(); 
+                        let timeParam = urlObj.searchParams.get('t'); /
 
+                            url = `https://rutube.ru/play/embed/${videoId}`;
+                        if (timeParam) {
+                            url += `?t=${timeParam.replace('s', '')}`; 
+                        }
+                    }
                     iPopFrame.innerHTML = `<iframe src="${url}" frameborder="0" allow="autoplay; encrypted-media; fullscreen;"></iframe>`;
                 } else if (url.indexOf('#') == -1) { // Image
 
