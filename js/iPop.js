@@ -2,7 +2,6 @@ class VideoService {
     static YOUTUBE = "YouTube";
     static RUTUBE = "RuTube";
     static VK = "VK";
-
     static detectService(url) {
         if (url.includes("youtu.be") || url.includes("youtube.com")) {
             return VideoService.YOUTUBE;
@@ -15,10 +14,8 @@ class VideoService {
         }
     }
 }
-
 function iPop() {
     let ip = this;
-
     this.init = function() {
         let iPopElements = document.querySelectorAll('.iPop-img, .iPop-video, .iPop-iframe');
         for (let i = 0; i < iPopElements.length; i++) {
@@ -29,7 +26,6 @@ function iPop() {
                 ip.iPop('', this);
             });
         }
-
         let iPopLinks = document.querySelectorAll('.iPop-up');
         for (let i = 0; i < iPopLinks.length; i++) {
             let link = iPopLinks[i];
@@ -38,10 +34,8 @@ function iPop() {
                 ip.handlePopupContent(this);
             });
         }
-
         document.body.addEventListener('keyup', function(e) { ip.onKeyup(e); });
     };
-
     this.onKeyup = function(e) {
         let iPopImg = document.querySelector('.iPopImg');
         if (!iPopImg) return;
@@ -57,42 +51,33 @@ function iPop() {
             ip.closeIpop();
         }
     };
-
     this.handlePopupContent = function(link) {
         let targetId = link.getAttribute('href').substring(1); // Remove #
         let contentDiv = document.getElementById(targetId);
-
         if (contentDiv) {
             let html = `<div class="iPopOverlay active">
                 <button type="button" class="closeIpop" title="Close"></button>
                 <div class="iPopFrame">${contentDiv.outerHTML}</div>
             </div>`;
-
             let fragment = document.createRange().createContextualFragment(html);
             document.body.appendChild(fragment);
-
             document.querySelector('.closeIpop').addEventListener('click', function() {
                 ip.closeIpop();
             });
         }
     };
-
     this.onIpopOpen = function(cb) {
         return cb && typeof cb === 'function' && cb();
     };
-
     this.onIpopClose = function(cb) {
         return cb && typeof cb === 'function' && cb();
     };
-
     this.onNextItemClick = function(cb) {
         return cb && typeof cb === 'function' && cb();
     };
-
     this.onPrevItemClick = function(cb) {
         return cb && typeof cb === 'function' && cb();
     };
-
     this.iPop = function(code, el) {
         let iPopClass = '', hasSelf = true, url = "", html = '';
         if (typeof el == 'undefined') {
@@ -106,13 +91,11 @@ function iPop() {
                     <button type="button" class="closeIpop" title="Close"></button>
                     <div class="iPopFrame ${iPopClass}"></div>
                 </div>`);
-
         document.addEventListener('click', function(e) {
             if (e.target.className == 'iPopOverlay active' || e.target.className == 'closeIpop') {
                 ip.closeIpop();
             }
         });
-
         let placeHolderEl = document.querySelector('.iPopPlaceHolder');
         if (!document.querySelector('.iPopFrame')) {
             document.body.appendChild(html);
@@ -130,11 +113,9 @@ function iPop() {
             });
         }
     };
-
     this.insertIpopHtml = function(el, hasSelf, url, code, cb) {
         let iPopFrame = document.querySelector('.iPopFrame'),
             placeHolderEl = document.querySelector('.iPopPlaceHolder');
-
         if (hasSelf) {
             if (el.classList.contains('iPop-iframe')) {
                 // Direct iframe handling
@@ -145,22 +126,18 @@ function iPop() {
                     if (service === VideoService.YOUTUBE) {
                         let urlObj = new URL(url);
                         let youtube_id = '';
-
                         if (urlObj.hostname === 'youtu.be') {
                             youtube_id = urlObj.pathname.slice(1);
                         } else if (urlObj.hostname.includes('youtube.com')) {
                             youtube_id = urlObj.searchParams.get('v') || urlObj.pathname.split('/').pop();
                         }
-
                         let embedUrl = new URL(`https://www.youtube.com/embed/${youtube_id}`);
                         embedUrl.searchParams.set('wmode', 'transparent');
                         embedUrl.searchParams.set('rel', '0');
                         embedUrl.searchParams.set('autoplay', '1');
-
                         if (urlObj.searchParams.get('t')) {
                             embedUrl.searchParams.set('start', urlObj.searchParams.get('t').replace('s', ''));
                         }
-
                         url = embedUrl.toString();
                     } else if (service === VideoService.VK) { // VK
                         let vk_id = url.match(/video(-?\d+)_(\d+)/);
@@ -172,7 +149,6 @@ function iPop() {
                         let urlObj = new URL(url);
                         let videoId = urlObj.pathname.split('/').filter(Boolean).pop(); 
                         let timeParam = urlObj.searchParams.get('t'); /
-
                             url = `https://rutube.ru/play/embed/${videoId}`;
                         if (timeParam) {
                             url += `?t=${timeParam.replace('s', '')}`; 
@@ -180,15 +156,12 @@ function iPop() {
                     }
                     iPopFrame.innerHTML = `<iframe src="${url}" frameborder="0" allow="autoplay; encrypted-media; fullscreen;"></iframe>`;
                 } else if (url.indexOf('#') == -1) { // Image
-
-
                     let iPopImg = document.querySelector('.iPopImg');
                     if (iPopImg) {
                         iPopFrame.appendChild(document.createRange().createContextualFragment('<div class="iPopLoader"></div>'));
                     } else {
                         iPopFrame.appendChild(document.createRange().createContextualFragment('<div class="iPopLoader"></div>'));
                     }
-
                     let img = new Image();
                     img.src = url;
                     img.className = 'iPopImg';
@@ -213,7 +186,6 @@ function iPop() {
         }
         cb && cb();
     };
-
     this.iPopNextPrevItem = function(el, isNext) {
         let group = el.getAttribute('data-iPop-group');
         let targetIndex;
@@ -235,12 +207,10 @@ function iPop() {
             isNext ? ip.onNextItemClick() : ip.onPrevItemClick();
         }
     };
-
     this.closeIpop = function() {
         let iPopOverlay = document.querySelector('.iPopOverlay'),
             iPopFrame = document.querySelector('.iPopFrame'),
             iPopPlaceHolder = document.querySelector('.iPopPlaceHolder');
-
         iPopOverlay.classList.remove('active');
         setTimeout(function() {
             if (iPopPlaceHolder && iPopPlaceHolder.parentNode) {
@@ -251,12 +221,10 @@ function iPop() {
             ip.onIpopClose();
         }, 600);
     };
-
     this.generatePreview = function(element) {
         if (element.querySelector('img')) {
             return; // Skip if an image already exists
         }
-
         let url = element.href;
         let service = VideoService.detectService(url);
         if (service === VideoService.YOUTUBE) {
@@ -277,7 +245,6 @@ function iPop() {
         }
     };
 };
-
 document.addEventListener('DOMContentLoaded', function() {
     let myIpop;
     if (document.querySelector('.iPop-img, .iPop-video, .iPop-iframe')) {
@@ -285,4 +252,3 @@ document.addEventListener('DOMContentLoaded', function() {
         myIpop.init();
     }
 });
-
