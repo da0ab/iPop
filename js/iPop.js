@@ -148,7 +148,7 @@ function iPop() {
                     } else if (service === VideoService.RUTUBE) { // RuTube
                         let urlObj = new URL(url);
                         let videoId = urlObj.pathname.split('/').filter(Boolean).pop(); 
-                        let timeParam = urlObj.searchParams.get('t'); /
+                        let timeParam = urlObj.searchParams.get('t'); 
                             url = `https://rutube.ru/play/embed/${videoId}`;
                         if (timeParam) {
                             url += `?t=${timeParam.replace('s', '')}`; 
