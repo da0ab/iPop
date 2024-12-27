@@ -37,7 +37,6 @@ function iPop() {
         document.body.addEventListener('keyup', function(e) { ip.onKeyup(e); });
     };
     this.onKeyup = function(e) {
-        let iPopImg = document.querySelector('.iPopImg');
         if (!iPopImg) return;
         let iPopImgSrc = iPopImg.getAttribute('src');
         let nextPrevItem = document.querySelector(`.iPop-img[href="${iPopImgSrc}"]`);
@@ -89,7 +88,7 @@ function iPop() {
         }
         html = document.createRange().createContextualFragment(`<div class="iPopOverlay">
                     <button type="button" class="closeIpop" title="Close"></button>
-                    <div class="iPopFrame ${iPopClass}"></div>
+                    <div class="iPopFrame"></div>
                 </div>`);
         document.addEventListener('click', function(e) {
             if (e.target.className == 'iPopOverlay active' || e.target.className == 'closeIpop') {
@@ -147,39 +146,56 @@ function iPop() {
                         }
                     } else if (service === VideoService.RUTUBE) { // RuTube
                         let urlObj = new URL(url);
-                        let videoId = urlObj.pathname.split('/').filter(Boolean).pop(); 
+                        let videoId = urlObj.pathname.split('/').filter(Boolean).pop();
                         let timeParam = urlObj.searchParams.get('t'); 
-                            url = `https://rutube.ru/play/embed/${videoId}`;
+                        url = `https://rutube.ru/play/embed/${videoId}`;
                         if (timeParam) {
                             url += `?t=${timeParam.replace('s', '')}`; 
                         }
                     }
                     iPopFrame.innerHTML = `<iframe src="${url}" frameborder="0" allow="autoplay; encrypted-media; fullscreen;"></iframe>`;
-                } else if (url.indexOf('#') == -1) { // Image
-                    let iPopImg = document.querySelector('.iPopImg');
-                    if (iPopImg) {
-                        iPopFrame.appendChild(document.createRange().createContextualFragment('<div class="iPopLoader"></div>'));
-                    } else {
-                        iPopFrame.appendChild(document.createRange().createContextualFragment('<div class="iPopLoader"></div>'));
-                    }
-                    let img = new Image();
-                    img.src = url;
-                    img.className = 'iPopImg';
-                    img.onload = function() {
-                        let code = `<img src="${url}" alt="" class="iPopImg">`;
-                        let group = el.getAttribute('data-iPop-group');
-                        if (group && document.querySelector(`.iPop-img[data-iPop-group="${group}"]`)) {
-                            code = `<button type="button" class="iPopNextImg" title="Next"></button>${code}<button type="button" class="iPopPrevImg" title="Prev"></button>`;
-                        }
-                        iPopFrame.innerHTML = code;
-                        document.querySelector('.iPopNextImg').addEventListener('click', function() {
-                            ip.iPopNextPrevItem(el, true);
-                        });
-                        document.querySelector('.iPopPrevImg').addEventListener('click', function() {
-                            ip.iPopNextPrevItem(el, false);
-                        });
-                    };
                 }
+                
+else if (url.indexOf('#') == -1) { // Image handling
+    let isGroup = el.classList.contains('iPop-img');
+    let imgElement = el.querySelector('img');
+    let title = imgElement ? imgElement.getAttribute('title') || '' : '';
+    let group = el.getAttribute('data-iPop-group');
+    // Generate image and title HTML
+    const generateImageHTML = (url, title) => `
+        <div class="relative">
+            <img src="${url}" alt="" title="${title}">
+            ${title ? `<div class="iPopImgTitle">${title}</div>` : ''}
+        </div>
+    `;
+    let contentHTML = generateImageHTML(url, title);
+    // Add navigation buttons if group exists
+    if (isGroup && group) {
+        contentHTML = `
+            <button type="button" class="iPopNextImg" title="Next"></button>
+            ${contentHTML}
+            <button type="button" class="iPopPrevImg" title="Prev"></button>
+        `;
+    }
+    // Insert content into the frame
+    iPopFrame.innerHTML = contentHTML;
+    // Attach navigation listeners if group exists
+    if (group) {
+        const groupElements = Array.from(document.querySelectorAll(`.iPop-img[data-iPop-group="${group}"]`));
+        const navigateGroup = (currentIndex, isNext) => {
+            const newIndex = (currentIndex + (isNext ? 1 : -1) + groupElements.length) % groupElements.length;
+            const targetEl = groupElements[newIndex];
+            ip.insertIpopHtml(targetEl, true, targetEl.getAttribute('href'), '', () => {
+                document.querySelector('.iPopOverlay').classList.add('active');
+            });
+        };
+        const currentIndex = groupElements.indexOf(el);
+        document.querySelector('.iPopNextImg').addEventListener('click', () => navigateGroup(currentIndex, true));
+        document.querySelector('.iPopPrevImg').addEventListener('click', () => navigateGroup(currentIndex, false));
+    }
+    // Ensure overlay is active
+    document.querySelector('.iPopOverlay').classList.add('active');
+}
             }
         } else {
             iPopFrame.innerHTML = code;
@@ -221,29 +237,39 @@ function iPop() {
             ip.onIpopClose();
         }, 600);
     };
-    this.generatePreview = function(element) {
-        if (element.querySelector('img')) {
-            return; // Skip if an image already exists
+this.generatePreview = function(element) {
+    if (element.querySelector('img')) {
+        return; // Пропускаем, если изображение уже существует
+    }
+    let url = element.href;
+    let service = VideoService.detectService(url);
+    if (service === VideoService.YOUTUBE) {
+        let urlObj = new URL(url);
+        let idYoutube = urlObj.hostname === 'youtu.be' 
+            ? urlObj.pathname.replace('/', '') 
+            : urlObj.searchParams.get('v');
+        if (idYoutube) {
+            let theImg = element.classList.contains("Ytube-mini")
+                ? `https://img.youtube.com/vi/${idYoutube}/mqdefault.jpg`
+                : `https://img.youtube.com/vi/${idYoutube}/maxresdefault.jpg`;
+            element.innerHTML += `<img src="${theImg}" alt="YouTube Preview">`;
         }
-        let url = element.href;
-        let service = VideoService.detectService(url);
-        if (service === VideoService.YOUTUBE) {
-            let urlObj = new URL(url);
-            let idYoutube = urlObj.hostname === 'youtu.be' ? urlObj.pathname.replace('/', '') : urlObj.searchParams.get('v');
-            if (idYoutube) {
-                let theImg = element.classList.contains("Ytube-mini")
-                    ? `https://img.youtube.com/vi/${idYoutube}/mqdefault.jpg`
-                    : `https://img.youtube.com/vi/${idYoutube}/maxresdefault.jpg`;
-                element.innerHTML += `<img src="${theImg}" alt="YouTube Preview">`;
-            }
-        } else if (service === VideoService.RUTUBE) {
-            let idRutube = new URL(url).pathname.split('/').filter(Boolean).pop();
-            if (idRutube) {
-                let theImg = `https://preview.rutube.ru/preview/${idRutube}.webp`;
-                element.innerHTML += `<img src="${theImg}" alt="RuTube Preview">`;
-            }
+    } else if (service === VideoService.RUTUBE) {
+        let idRutube = new URL(url).pathname.split('/').filter(Boolean).pop();
+        if (idRutube) {
+            let theImg = `https://preview.rutube.ru/preview/${idRutube}.webp`;
+            element.innerHTML += `<img src="${theImg}" alt="RuTube Preview">`;
         }
-    };
+    } else if (service === VideoService.VK && element.classList.contains("iPop-video")) {
+        // Проверяем, является ли ссылка на видео ВК и имеет ли класс iPop-video
+        let idVkMatch = url.match(/video[-\d]+_\d+/);
+        if (idVkMatch) {
+            let idVk = idVkMatch[0];
+            let theImg = `images/preview/vk/${idVk}.jpg`;
+            element.innerHTML += `<img src="${theImg}" alt="VK Preview">`;
+        }
+    }
+};
 };
 document.addEventListener('DOMContentLoaded', function() {
     let myIpop;
