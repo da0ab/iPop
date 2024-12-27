@@ -21,7 +21,9 @@
 <a href="https://rutube.ru/video/35f549128069e557ddadd549b014ca84/?r=wd" class="iPop-video"></a>
 <a href="https://rutube.ru/video/35f549128069e557ddadd549b014ca84/?t=90" class="iPop-video"></a>
 ```
-**VK-видео** превью устанавливается в ручную,  поддерживается указание времени начала показа формата **?start=90**
+**VK-видео** тк скрипт не использует api, то превью нужно самостоятельно положить в папку images/preview/vk/video-119098218_456239140.jpg
+, имя файла соответствуеш id видео без времени. 
+Поддерживается указание времени начала показа формата **?start=90**
 ```HTML
 <a href="https://vk.com/video-119098218_456239140?start=90" class="iPop-video"><img src="https://images.placeholders.dev/?width=1280&height=720" alt="" title=""></a>
 ```
