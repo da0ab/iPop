@@ -24,6 +24,10 @@ section  {
 a {
 color: #6c6a6a;
 }
+h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
 h3 {
 font-size: 1.2rem;
 margin-bottom: 2rem;
