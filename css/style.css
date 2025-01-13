@@ -12,7 +12,7 @@
 section  {
     padding: var(--sec, 0);
     margin-bottom: var(--m-b);
-    border-botom: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 [class*=grid-] {
     clear: both;
@@ -22,7 +22,7 @@ section  {
     grid-template-columns: var(--col);
 }
 a {
-color: #6c6a6a;
+    color: #6c6a6a;
 }
 h1 {
     text-align: center;
@@ -30,12 +30,11 @@ h1 {
     margin-bottom: 2rem;
 }
 h3 {
-font-size: 1.2rem;
-margin-bottom: 2rem;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
 }
 p {
 margin-bottom: 1rem;
-
 }
 .grid-2 {
     --col: repeat(2, 1fr);
