@@ -265,7 +265,7 @@ this.generatePreview = function(element) {
         let idVkMatch = url.match(/video[-\d]+_\d+/);
         if (idVkMatch) {
             let idVk = idVkMatch[0];
-            let theImg = `images/preview/vk/${idVk}.jpg`;
+            let theImg = `images/preview/vk/${idVk}.webp`;
             element.innerHTML += `<img src="${theImg}" alt="VK Preview">`;
         }
     }
