@@ -117,7 +117,6 @@ function iPop() {
             placeHolderEl = document.querySelector('.iPopPlaceHolder');
         if (hasSelf) {
             if (el.classList.contains('iPop-iframe')) {
-                // Direct iframe handling
                 iPopFrame.innerHTML = `<iframe src="${url}" frameborder="0" allow="autoplay; encrypted-media; fullscreen;"></iframe>`;
             } else {
                 let service = VideoService.detectService(url);
@@ -154,14 +153,12 @@ function iPop() {
                         }
                     }
                     iPopFrame.innerHTML = `<iframe src="${url}" frameborder="0" allow="autoplay; encrypted-media; fullscreen;"></iframe>`;
-                }
-                
+                }                
 else if (url.indexOf('#') == -1) { // Image handling
     let isGroup = el.classList.contains('iPop-img');
     let imgElement = el.querySelector('img');
     let title = imgElement ? imgElement.getAttribute('title') || '' : '';
     let group = el.getAttribute('data-iPop-group');
-    // Generate image and title HTML
     const generateImageHTML = (url, title) => `
         <div class="relative">
             <img src="${url}" alt="" title="${title}">
@@ -177,9 +174,7 @@ else if (url.indexOf('#') == -1) { // Image handling
             <button type="button" class="iPopPrevImg" title="Prev"></button>
         `;
     }
-    // Insert content into the frame
     iPopFrame.innerHTML = contentHTML;
-    // Attach navigation listeners if group exists
     if (group) {
         const groupElements = Array.from(document.querySelectorAll(`.iPop-img[data-iPop-group="${group}"]`));
         const navigateGroup = (currentIndex, isNext) => {
@@ -193,7 +188,6 @@ else if (url.indexOf('#') == -1) { // Image handling
         document.querySelector('.iPopNextImg').addEventListener('click', () => navigateGroup(currentIndex, true));
         document.querySelector('.iPopPrevImg').addEventListener('click', () => navigateGroup(currentIndex, false));
     }
-    // Ensure overlay is active
     document.querySelector('.iPopOverlay').classList.add('active');
 }
             }
@@ -239,7 +233,7 @@ else if (url.indexOf('#') == -1) { // Image handling
     };
 this.generatePreview = function(element) {
     if (element.querySelector('img')) {
-        return; // Пропускаем, если изображение уже существует
+        return; 
     }
     let url = element.href;
     let service = VideoService.detectService(url);
@@ -261,7 +255,6 @@ this.generatePreview = function(element) {
             element.innerHTML += `<img src="${theImg}" alt="RuTube Preview">`;
         }
     } else if (service === VideoService.VK && element.classList.contains("iPop-video")) {
-        // Проверяем, является ли ссылка на видео ВК и имеет ли класс iPop-video
         let idVkMatch = url.match(/video[-\d]+_\d+/);
         if (idVkMatch) {
             let idVk = idVkMatch[0];
