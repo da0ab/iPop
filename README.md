@@ -63,7 +63,7 @@ class="iPop-iframe">Текст или изображение</a>
 ## iPop-up
 
 ```HTML 
-<a href="#id-1" frameborder="0" class="iPop-up">Ссылка на окно #id-1</a>                    
+<a href="#id-1" class="iPop-up">Ссылка на окно #id-1</a>                    
 <div class="iPop-up-data" id="id-1">
   <p>Содержимое всплывающего окна</p> 
 </div>
