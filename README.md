@@ -56,7 +56,7 @@
 ## iPop-frame
 
 ```HTML 
-<a href="https://yandex.ru/map-widget/v1/?um=constructor%3Afbc06e4a7351d44f85aa4e3e5637b42daf0ac6c0ca27e1fdd7f75b79ac241526&amp;source=constructor"
+<a href="https://yandex.ru/map-widget/v1/?um=constructor%3Afbc06e4a7351d44f85aa4e3e5637b42daf0ac6c0ca27e1fdd7f75b79ac241526"
 class="iPop-iframe">Текст или изображение</a>
 ```
 
