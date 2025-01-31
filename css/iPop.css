@@ -55,7 +55,7 @@ a.iPop-video:not(:hover):after
 .iPop-up-data {
     display: none
 }
-.active .iPop-up-data {
+.iPopFrame .iPop-up-data {
     display: block;
     width: 60vw;
     height: 70vh;
@@ -63,7 +63,6 @@ a.iPop-video:not(:hover):after
     padding: 2rem;
     border-radius: 2px;
 }
-
 .iPopOverlay {
     position: fixed;
     left: 0;
@@ -71,17 +70,11 @@ a.iPop-video:not(:hover):after
     z-index: 10000;
     width: 100%;
     height: 100%;
-    visibility: hidden;
-    opacity: 0;
     background: #000;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: all 0.5s ease;
-}
-.iPopOverlay.active {
-    visibility: visible;
-    opacity: 1;
 }
 .iPopFrame img {
     max-height: 80vh;
@@ -126,17 +119,17 @@ a.iPop-video:not(:hover):after
 .iPopImgTitle {
     color: #fff;
     padding: 1rem .5rem .5rem;
-text-align: center;
+    text-align: center;
 }
 .iPopFrame .iPopNextImg,
 .iPopFrame .iPopPrevImg {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 5vw; 
+    width: 5vw;
     height: 30vh;
     border: none;
-    background: none; 
+    background: none;
     outline: none;
     cursor: pointer;
     z-index: 2;
@@ -170,22 +163,11 @@ text-align: center;
     border-bottom-color: #888;
     border-left-color: #888;
 }
-.iPopLoaderWrap {
-    text-align: center;
-    position: absolute;
-    right: 0;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    height: 100%;
-    width: 100%;
-}
 .iPopLoader {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: grid;
-    place-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
 }
 .iPopLoader:after {
     content: " ";
@@ -226,7 +208,7 @@ text-align: center;
         text-align: center;
     }
 }
-@media (max-width:400px) { 
+@media (max-width:400px) {
     .iPopFrame {
         height: auto!important;
     }
