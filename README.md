@@ -51,7 +51,7 @@
 <a href="images/photo/02.jpg" class="iPop-img" data-iPop-group="group1"><img src="images/photo/t/02.jpg" alt="" title="Текст есть"></a>
 <a href="images/photo/03.jpg" class="iPop-img" data-iPop-group="group1"><img src="images/photo/t/03.jpg" alt="" title=""></a>
 ```
-Если **title** заполнен, текст выводится под изображением в всплывающем окне
+Если **title** изображения заполнен, текст выводится под изображением в всплывающем окне
 
 ## iPop-frame
 
