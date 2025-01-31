@@ -7,7 +7,7 @@
  - **iPop-up** - popup с привязкой по id
 
 
-###   <a href="https://da0ab.github.io/iPop/" target="_blank"> Демо страница </a>
+###  Демо страница https://da0ab.github.io/iPop/
 
 ## iPop-video 
 
