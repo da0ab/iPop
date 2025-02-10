@@ -35,7 +35,8 @@
 - превью нужно самостоятельно положить в папку **images/preview/vk/**
 - имя файла соответствует **id** видео без времени **video-119098218_456239140.webp**
 - временя начала показа в формате **?start=90**
-
+- работают ссылка с vk.com и vkvideo.ru
+ 
 ```HTML
 <a href="https://vk.com/video-119098218_456239140?start=90" class="iPop-video"><img src="https://images.placeholders.dev/?width=1280&height=720" alt="" title=""></a>
 ```
