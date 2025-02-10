@@ -11,7 +11,7 @@ class VideoService {
             return this.YOUTUBE;
         } else if (url.includes("rutube.ru")) {
             return this.RUTUBE;
-        } else if (url.includes("vk.com")) {
+        } else if (url.includes("vk.com") || url.includes("vkvideo.ru")) {  
             return this.VK;
         } else {
             return this.UNKNOWN;
@@ -40,7 +40,7 @@ class VideoService {
                 id: videoId,
                 thumbnail: `images/preview/vk/video${videoId}.webp`,
                 thumbnailDefault: `images/preview/no-video.webp`,
-                videoUrl: `https://vk.com/video${videoId}`,
+                videoUrl: `https://vk.com/video${videoId}`, 
                 startTime: startTime,
                 service: this.VK,
             };
@@ -85,30 +85,30 @@ class PopupOverlay {
     constructor() {
         this.container = null;
     }
-setContent(content) {
-    if (!this.container) {
-        this.createOverlay();
-    }
-    const frame = this.container.querySelector('.iPopFrame');
-    frame.innerHTML = ''; 
-    const loader = document.createElement('div');
-    loader.className = 'iPopLoader';
-    frame.appendChild(loader);
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = content;
-    const iframe = tempDiv.querySelector('iframe');
-    if (iframe) {
-        iframe.addEventListener('load', () => {
-            loader.remove();
-        });
-        frame.appendChild(iframe);
-    } else {
-        while (tempDiv.firstChild) {
-            frame.appendChild(tempDiv.firstChild);
+    setContent(content) {
+        if (!this.container) {
+            this.createOverlay();
         }
-        loader.remove();
+        const frame = this.container.querySelector('.iPopFrame');
+        frame.innerHTML = ''; 
+        const loader = document.createElement('div');
+        loader.className = 'iPopLoader';
+        frame.appendChild(loader);
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = content;
+        const iframe = tempDiv.querySelector('iframe');
+        if (iframe) {
+            iframe.addEventListener('load', () => {
+                loader.remove();
+            });
+            frame.appendChild(iframe);
+        } else {
+            while (tempDiv.firstChild) {
+                frame.appendChild(tempDiv.firstChild);
+            }
+            loader.remove();
+        }
     }
-}
     createOverlay() {
         const overlayHtml = `
             <div class="iPopOverlay">
@@ -238,19 +238,19 @@ class VideoHandler {
         this.popupOverlay.setContent(iframeHtml);
         this.popupOverlay.open();
     }
-generatePreview(details) {
-    if (!details) {
+    generatePreview(details) {
+        if (!details) {
+            return `<img src="images/preview/no-video.webp" alt="Нет превью">`;
+        }
+        if (details.service === VideoService.VK) {
+            const thumbnailPath = details.thumbnail || details.thumbnailDefault;
+            return `<img src="${thumbnailPath}" alt="VK превью" onerror="this.src='images/preview/no-video.webp'">`;
+        }
+        if (details.thumbnail) {
+            return `<img src="${details.thumbnail}" alt="Видео превью">`;
+        }
         return `<img src="images/preview/no-video.webp" alt="Нет превью">`;
     }
-    if (details.service === VideoService.VK) {
-        const thumbnailPath = details.thumbnail || details.thumbnailDefault;
-        return `<img src="${thumbnailPath}" alt="VK превью" onerror="this.src='images/preview/no-video.webp'">`;
-    }
-    if (details.thumbnail) {
-        return `<img src="${details.thumbnail}" alt="Видео превью">`;
-    }
-    return `<img src="images/preview/no-video.webp" alt="Нет превью">`;
-}
     generateIframe(details) {
         let iframeSrc = '';
         switch (details.service) {
