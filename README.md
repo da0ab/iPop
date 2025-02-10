@@ -16,6 +16,8 @@
 - если внутри ссылки есть изображение превью не забирается
 - класс **Ytube-mini** забирает малое превью
 - временя начала показа в формате **&t=445**
+- работают ссыли **youtu.be** и **youtube.com**
+- автоплей
 
 ```HTML
 <a href="https://youtu.be/94Y9gMF-qL0" class="iPop-video"></a>
@@ -36,6 +38,7 @@
 - имя файла соответствует **id** видео без времени **video-119098218_456239140.webp**
 - временя начала показа в формате **?start=90**
 - работают ссылки с **vk.com** и **vkvideo.ru**
+- автоплей
  
 ```HTML
 <a href="https://vk.com/video-119098218_456239140?start=90" class="iPop-video"><img src="https://images.placeholders.dev/?width=1280&height=720" alt="" title=""></a>
