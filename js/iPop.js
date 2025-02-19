@@ -56,7 +56,6 @@ class VideoService {
             return {
                 id: videoId,
                 thumbnail: `https://preview.rutube.ru/preview/${videoId}.webp`,
-                thumbnailDefault: `images/video/no-video.jpg`,
                 videoUrl: `https://rutube.ru/video/${videoId}`,
                 startTime: startTime,
                 service: this.RUTUBE,
@@ -240,16 +239,16 @@ class VideoHandler {
     }
     generatePreview(details) {
         if (!details) {
-            return `<img src="images/video/no-video.webp" alt="Нет превью">`;
+            return `<img src="images/video/no-video.jpg" alt="Нет превью">`;
         }
         if (details.service === VideoService.VK) {
             const thumbnailPath = details.thumbnail || details.thumbnailDefault;
-            return `<img src="${thumbnailPath}" alt="VK превью" onerror="this.src='images/video/no-video.webp'">`;
+            return `<img src="${thumbnailPath}" alt="VK превью" onerror="this.src='images/video/no-video.jpg'">`;
         }
         if (details.thumbnail) {
             return `<img src="${details.thumbnail}" alt="Видео превью">`;
         }
-        return `<img src="images/preview/no-video.webp" alt="Нет превью">`;
+        return `<img src="images/video/no-video.jpg" alt="Нет превью">`;
     }
     generateIframe(details) {
         let iframeSrc = '';
