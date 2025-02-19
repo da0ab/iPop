@@ -34,14 +34,16 @@
 <a href="https://rutube.ru/video/35f549128069e557ddadd549b014ca84/?t=90" class="iPop-video"></a>
 ```
 ### VK-видео
-- превью нужно самостоятельно положить в папку **images/preview/vk/**
-- имя файла соответствует **id** видео без времени **video-119098218_456239140.webp**
+- превью нужно самостоятельно положить в папку **images/video/**
+- имя файла соответствует **id** видео без времени **video-119098218_456239140__cover.jpg**
 - временя начала показа в формате **?start=90**
 - работают ссылки с **vk.com** и **vkvideo.ru**
 - автоплей
+
+Обложки можно забрать через сервис https://smm-e.ru/services/vk/videos/download-cover/
  
 ```HTML
-<a href="https://vk.com/video-119098218_456239140?start=90" class="iPop-video"><img src="https://images.placeholders.dev/?width=1280&height=720" alt="" title=""></a>
+<a href="https://vk.com/video-119098218_456239140?start=90" class="iPop-video"></a>
 ```
 
 ## iPop-img
