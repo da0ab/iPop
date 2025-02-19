@@ -44,6 +44,7 @@
  
 ```HTML
 <a href="https://vk.com/video-119098218_456239140?start=90" class="iPop-video"></a>
+<a href="https://vkvideo.ru/video-119098218_456239140?start=90" class="iPop-video"></a>
 ```
 
 ## iPop-img
