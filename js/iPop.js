@@ -39,7 +39,6 @@ class VideoService {
             return {
                 id: videoId,
                 thumbnail: `images/video/video${videoId}_cover.jpg`,
-                thumbnailDefault: `images/video/no-video.jpg`,
                 videoUrl: `https://vk.com/video${videoId}`, 
                 startTime: startTime,
                 service: this.VK,
@@ -242,7 +241,7 @@ class VideoHandler {
             return `<img src="images/video/no-video.jpg" alt="Нет превью">`;
         }
         if (details.service === VideoService.VK) {
-            const thumbnailPath = details.thumbnail || details.thumbnailDefault;
+            const thumbnailPath = details.thumbnail;
             return `<img src="${thumbnailPath}" alt="VK превью" onerror="this.src='images/video/no-video.jpg'">`;
         }
         if (details.thumbnail) {
