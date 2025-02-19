@@ -38,7 +38,7 @@ class VideoService {
             const startTime = startMatch ? startMatch[1] : null;
             return {
                 id: videoId,
-                thumbnail: `images/video/video${videoId}.jpg`,
+                thumbnail: `images/video/video${videoId}_cover.jpg`,
                 thumbnailDefault: `images/video/no-video.jpg`,
                 videoUrl: `https://vk.com/video${videoId}`, 
                 startTime: startTime,
@@ -56,7 +56,7 @@ class VideoService {
             return {
                 id: videoId,
                 thumbnail: `https://preview.rutube.ru/preview/${videoId}.webp`,
-                thumbnailDefault: `images/video/no-video.webp`,
+                thumbnailDefault: `images/video/no-video.jpg`,
                 videoUrl: `https://rutube.ru/video/${videoId}`,
                 startTime: startTime,
                 service: this.RUTUBE,
