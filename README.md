@@ -11,6 +11,20 @@
 
 ## iPop-video 
 
+### VK-видео
+- превью нужно самостоятельно положить в папку **images/video/**
+- имя файла соответствует **id** видео без времени **video-119098218_456239140__cover.jpg**
+- временя начала показа в формате **?start=90**
+- работают ссылки с **vk.com** и **vkvideo.ru**
+- автоплей
+
+Обложки можно забрать через сервис https://smm-e.ru/services/vk/videos/download-cover/
+ 
+```HTML
+<a href="https://vk.com/video-119098218_456239140?start=90" class="iPop-video"></a>
+<a href="https://vkvideo.ru/video-119098218_456239140?start=90" class="iPop-video"></a>
+```
+
 ### YouTube
 - превью забирается автоматически
 - если внутри ссылки есть изображение превью не забирается
@@ -33,19 +47,7 @@
 <a href="https://rutube.ru/video/35f549128069e557ddadd549b014ca84/?r=wd" class="iPop-video"></a>
 <a href="https://rutube.ru/video/35f549128069e557ddadd549b014ca84/?t=90" class="iPop-video"></a>
 ```
-### VK-видео
-- превью нужно самостоятельно положить в папку **images/video/**
-- имя файла соответствует **id** видео без времени **video-119098218_456239140__cover.jpg**
-- временя начала показа в формате **?start=90**
-- работают ссылки с **vk.com** и **vkvideo.ru**
-- автоплей
 
-Обложки можно забрать через сервис https://smm-e.ru/services/vk/videos/download-cover/
- 
-```HTML
-<a href="https://vk.com/video-119098218_456239140?start=90" class="iPop-video"></a>
-<a href="https://vkvideo.ru/video-119098218_456239140?start=90" class="iPop-video"></a>
-```
 
 ## iPop-img
 
