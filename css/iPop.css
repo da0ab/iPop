@@ -2,7 +2,7 @@ a[class*=iPop] {
     border-bottom: 0 !important;
 }
 [class*=iPop] img {
-    border: 1px solid #ddd;
+    border: 1px solid #fff9;
 }
 .iPop-video {
     position: relative;
