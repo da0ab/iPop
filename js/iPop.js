@@ -83,30 +83,46 @@ class PopupOverlay {
     constructor() {
         this.container = null;
     }
-    setContent(content) {
-        if (!this.container) {
-            this.createOverlay();
-        }
-        const frame = this.container.querySelector('.iPopFrame');
-        frame.innerHTML = ''; 
-        const loader = document.createElement('div');
-        loader.className = 'iPopLoader';
-        frame.appendChild(loader);
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = content;
-        const iframe = tempDiv.querySelector('iframe');
-        if (iframe) {
-            iframe.addEventListener('load', () => {
-                loader.remove();
-            });
-            frame.appendChild(iframe);
-        } else {
-            while (tempDiv.firstChild) {
-                frame.appendChild(tempDiv.firstChild);
-            }
-            loader.remove();
-        }
+setContent(content) {
+    if (!this.container) {
+        this.createOverlay();
     }
+    const frame = this.container.querySelector('.iPopFrame');
+    frame.innerHTML = '';
+
+    const loader = document.createElement('div');
+    loader.className = 'iPopLoader';
+    frame.appendChild(loader);
+
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = content.trim();
+
+    const img = tempDiv.querySelector('img');
+    const iframe = tempDiv.querySelector('iframe');
+
+    if (iframe) {
+        iframe.addEventListener('load', () => {
+            loader.remove();
+        });
+        frame.appendChild(iframe);
+    } else if (img) {
+        img.addEventListener('load', () => {
+            loader.remove();
+        });
+        img.addEventListener('error', () => {
+            loader.remove();
+            console.error('Ошибка загрузки изображения');
+        });
+        while (tempDiv.firstChild) {
+            frame.appendChild(tempDiv.firstChild);
+        }
+     } else {
+        while (tempDiv.firstChild) {
+            frame.appendChild(tempDiv.firstChild);
+        }
+        loader.remove();
+    }
+}
     createOverlay() {
         const overlayHtml = `
             <div class="iPopOverlay">
