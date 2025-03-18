@@ -50,17 +50,21 @@
 
 
 ## iPop-img
+- Прелоадер
+- Если **title** изображения заполнен, текст выводится под изображением в всплывающем окне
+- Поддержка swipe
 
 ```HTML
 <a href="images/photo/01.jpg" class="iPop-img"><img src="images/photo/t/01.jpg" alt="" title="Я не в группе"></a>
 ```
-**data-iPop-group="group1"** для создания групп изображений
+- **data-iPop-group="group1"** для создания групп изображений
+- Счетчик изображений
 
 ```HTML                    
 <a href="images/photo/02.jpg" class="iPop-img" data-iPop-group="group1"><img src="images/photo/t/02.jpg" alt="" title="Текст есть"></a>
 <a href="images/photo/03.jpg" class="iPop-img" data-iPop-group="group1"><img src="images/photo/t/03.jpg" alt="" title=""></a>
 ```
-Если **title** изображения заполнен, текст выводится под изображением в всплывающем окне
+
 
 ## iPop-frame
 
