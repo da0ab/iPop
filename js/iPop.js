@@ -175,9 +175,12 @@ class ImageGallery {
     }
     showImage(index) {
         const image = this.images[index];
+        const total = this.images.length;
+        const currentNumber = index + 1;
         const content = `
             <img src="${image.src}" alt="">
             ${image.title ? `<div class="iPopImgTitle">${image.title}</div>` : ''}
+            <div class="iPopImgCounter">${currentNumber} / ${total}</div>
             <div class="iPopNextImg" title="Next"></div>
             <div class="iPopPrevImg" title="Prev"></div>`;
         this.overlay.setContent(content);
