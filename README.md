@@ -52,7 +52,6 @@
 ## iPop-img
 - Прелоадер
 - Если **title** изображения заполнен, текст выводится под изображением в всплывающем окне
-- Поддержка swipe
 
 ```HTML
 <a href="images/photo/01.jpg" class="iPop-img"><img src="images/photo/t/01.jpg" alt="" title="Я не в группе"></a>
