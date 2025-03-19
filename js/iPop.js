@@ -11,7 +11,7 @@ class VideoService {
             return this.YOUTUBE;
         } else if (url.includes("rutube.ru")) {
             return this.RUTUBE;
-        } else if (url.includes("vk.com") || url.includes("vkvideo.ru")) {  
+        } else if (url.includes("vk.com") || url.includes("vkvideo.ru")) {
             return this.VK;
         } else {
             return this.UNKNOWN;
@@ -39,7 +39,7 @@ class VideoService {
             return {
                 id: videoId,
                 thumbnail: `images/video/video${videoId}_cover.jpg`,
-                videoUrl: `https://vk.com/video${videoId}`, 
+                videoUrl: `https://vk.com/video${videoId}`,
                 startTime: startTime,
                 service: this.VK,
             };
@@ -83,46 +83,42 @@ class PopupOverlay {
     constructor() {
         this.container = null;
     }
-setContent(content) {
-    if (!this.container) {
-        this.createOverlay();
-    }
-    const frame = this.container.querySelector('.iPopFrame');
-    frame.innerHTML = '';
-
-    const loader = document.createElement('div');
-    loader.className = 'iPopLoader';
-    frame.appendChild(loader);
-
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = content.trim();
-
-    const img = tempDiv.querySelector('img');
-    const iframe = tempDiv.querySelector('iframe');
-
-    if (iframe) {
-        iframe.addEventListener('load', () => {
-            loader.remove();
-        });
-        frame.appendChild(iframe);
-    } else if (img) {
-        img.addEventListener('load', () => {
-            loader.remove();
-        });
-        img.addEventListener('error', () => {
-            loader.remove();
-            console.error('Ошибка загрузки изображения');
-        });
-        while (tempDiv.firstChild) {
-            frame.appendChild(tempDiv.firstChild);
+    setContent(content) {
+        if (!this.container) {
+            this.createOverlay();
         }
-     } else {
-        while (tempDiv.firstChild) {
-            frame.appendChild(tempDiv.firstChild);
+        const frame = this.container.querySelector('.iPopFrame');
+        frame.innerHTML = '';
+        const loader = document.createElement('div');
+        loader.className = 'iPopLoader';
+        frame.appendChild(loader);
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = content.trim();
+        const img = tempDiv.querySelector('img');
+        const iframe = tempDiv.querySelector('iframe');
+        if (iframe) {
+            iframe.addEventListener('load', () => {
+                loader.remove();
+            });
+            frame.appendChild(iframe);
+        } else if (img) {
+            img.addEventListener('load', () => {
+                loader.remove();
+            });
+            img.addEventListener('error', () => {
+                loader.remove();
+                console.error('Ошибка загрузки изображения');
+            });
+            while (tempDiv.firstChild) {
+                frame.appendChild(tempDiv.firstChild);
+            }
+        } else {
+            while (tempDiv.firstChild) {
+                frame.appendChild(tempDiv.firstChild);
+            }
+            loader.remove();
         }
-        loader.remove();
     }
-}
     createOverlay() {
         const overlayHtml = `
             <div class="iPopOverlay">
@@ -189,21 +185,43 @@ class ImageGallery {
         this.overlay.setContent(content);
         this.overlay.open();
     }
+    addSwipeHandlers() {
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const handleTouchStart = (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        };
+        const handleTouchEnd = (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            this.handleSwipe();
+        };
+        const container = this.overlay.container;
+        container.addEventListener('touchstart', handleTouchStart);
+        container.addEventListener('touchend', handleTouchEnd);
+        this.handleSwipe = () => {
+            const diff = touchStartX - touchEndX;
+            if (diff > 50) {
+                this.nextImage();
+            } else if (diff < -50) {
+                this.prevImage();
+            }
+        };
+    }
     showImage(index) {
         const image = this.images[index];
         const total = this.images.length;
         const currentNumber = index + 1;
         const content = `
-            <img src="${image.src}" alt="">
-            ${image.title ? `<div class="iPopImgTitle">${image.title}</div>` : ''}
-            <div class="iPopImgCounter">${currentNumber} / ${total}</div>
-            <div class="iPopNextImg" title="Next"></div>
-            <div class="iPopPrevImg" title="Prev"></div>`;
+        <img src="${image.src}" alt="">
+        ${image.title ? `<div class="iPopImgTitle">${image.title}</div>` : ''}
+        <div class="iPopImgCounter">${currentNumber} / ${total}</div>
+        <div class="iPopNextImg" title="Next"></div>
+        <div class="iPopPrevImg" title="Prev"></div>`;
         this.overlay.setContent(content);
         this.overlay.open();
         this.addNavigationHandlers();
-    }
-    addNavigationHandlers() {
+        this.addSwipeHandlers();
+    }    addNavigationHandlers() {
         const nextButton = this.overlay.container.querySelector('.iPopNextImg');
         const prevButton = this.overlay.container.querySelector('.iPopPrevImg');
         if (nextButton) {
