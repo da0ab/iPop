@@ -185,34 +185,6 @@ class ImageGallery {
         this.overlay.setContent(content);
         this.overlay.open();
     }
-    addSwipeHandlers() {
-        let touchStartX = 0, touchStartY = 0, touchStartTime = 0;
-        const handleTouchStart = (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-            touchStartY = e.changedTouches[0].screenY;
-            touchStartTime = Date.now();
-        };
-        const handleTouchEnd = (e) => {
-            const touchEndX = e.changedTouches[0].screenX;
-            const touchEndY = e.changedTouches[0].screenY;
-            const deltaX = touchEndX - touchStartX;
-            const deltaY = touchEndY - touchStartY;
-            const timeDiff = Date.now() - touchStartTime;
-            const isHorizontalSwipe = Math.abs(deltaX) > Math.abs(deltaY);
-            const isFast = timeDiff < 300; 
-            const isLongEnough = Math.abs(deltaX) > 30; 
-            if (isHorizontalSwipe && (isFast || isLongEnough)) {
-                if (deltaX < 0) {
-                    this.nextImage();
-                } else {
-                    this.prevImage();
-                }
-            }
-        };
-        const container = this.overlay.container;
-        container.addEventListener('touchstart', handleTouchStart);
-        container.addEventListener('touchend', handleTouchEnd);
-    }
     showImage(index) {
         const image = this.images[index];
         const total = this.images.length;
@@ -226,7 +198,6 @@ class ImageGallery {
         this.overlay.setContent(content);
         this.overlay.open();
         this.addNavigationHandlers();
-        this.addSwipeHandlers();
     }    addNavigationHandlers() {
         const nextButton = this.overlay.container.querySelector('.iPopNextImg');
         const prevButton = this.overlay.container.querySelector('.iPopPrevImg');
