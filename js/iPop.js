@@ -186,26 +186,32 @@ class ImageGallery {
         this.overlay.open();
     }
     addSwipeHandlers() {
-        let touchStartX = 0;
-        let touchEndX = 0;
+        let touchStartX = 0, touchStartY = 0, touchStartTime = 0;
         const handleTouchStart = (e) => {
             touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+            touchStartTime = Date.now();
         };
         const handleTouchEnd = (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            this.handleSwipe();
+            const touchEndX = e.changedTouches[0].screenX;
+            const touchEndY = e.changedTouches[0].screenY;
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            const timeDiff = Date.now() - touchStartTime;
+            const isHorizontalSwipe = Math.abs(deltaX) > Math.abs(deltaY);
+            const isFast = timeDiff < 300; 
+            const isLongEnough = Math.abs(deltaX) > 30; 
+            if (isHorizontalSwipe && (isFast || isLongEnough)) {
+                if (deltaX < 0) {
+                    this.nextImage();
+                } else {
+                    this.prevImage();
+                }
+            }
         };
         const container = this.overlay.container;
         container.addEventListener('touchstart', handleTouchStart);
         container.addEventListener('touchend', handleTouchEnd);
-        this.handleSwipe = () => {
-            const diff = touchStartX - touchEndX;
-            if (diff > 50) {
-                this.nextImage();
-            } else if (diff < -50) {
-                this.prevImage();
-            }
-        };
     }
     showImage(index) {
         const image = this.images[index];
