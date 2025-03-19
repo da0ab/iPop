@@ -150,12 +150,6 @@ a.iPop-video:not(:hover):after
     border-bottom: 4px solid #ffffffb3;
     border-left: 4px solid #ffffffb3;
 }
-.iPopImgCounter {
-    color: #fff;
-    position: absolute;
-    left: 1rem;
-    top: 1rem;
-}
 .iPopFrame .iPopPrevImg::after {
     left: 50px;
     transform: translate(0,-50%) rotate(45deg);
@@ -168,6 +162,12 @@ a.iPop-video:not(:hover):after
 .iPopFrame .iPopPrevImg:hover::after {
     border-bottom-color: #888;
     border-left-color: #888;
+}
+.iPopImgCounter {
+    color: #fff;
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
 }
 .iPopLoader {
     position: absolute;
