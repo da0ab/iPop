@@ -157,7 +157,7 @@ class ImageGallery {
         this.currentIndex = 0;
     }
     handle(target) {
-        const groupContainer = target.closest('.Pop-group');
+        const groupContainer = target.closest('.iPop-group');
         if (groupContainer) {
             this.loadGroupFromContainer(groupContainer, target);
         } else {
