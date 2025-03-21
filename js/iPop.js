@@ -157,23 +157,30 @@ class ImageGallery {
         this.currentIndex = 0;
     }
     handle(target) {
-        let group = target.dataset.iPopGroup;
-        if (!group) {
-            group = target.getAttribute('data-iPop-group');
-        }
-        if (group) {
-            this.loadGroup(group, target);
+        const groupContainer = target.closest('.Pop-group');
+        if (groupContainer) {
+            this.loadGroupFromContainer(groupContainer, target);
         } else {
-            this.showSingleImage(target);
+            const parent = target.parentElement;
+            const candidates = parent.querySelectorAll('a.iPop-img');
+            if (candidates.length > 1) {
+                this.loadGroupFromContainer(parent, target);
+            } else {
+                this.showSingleImage(target);
+            }
         }
     }
-    loadGroup(group, target) {
-        this.images = Array.from(document.querySelectorAll(`[data-iPop-group="${group}"]`)).map(el => ({
+    loadGroupFromContainer(container, target) {
+        this.images = Array.from(container.querySelectorAll('a.iPop-img')).map(el => ({
             src: el.href,
             title: el.querySelector('img')?.title || ''
         }));
         this.currentIndex = this.images.findIndex(img => img.src === target.href);
-        this.showImage(this.currentIndex);
+        if (this.currentIndex === -1) {
+            this.showSingleImage(target);
+        } else {
+            this.showImage(this.currentIndex);
+        }
     }
     showSingleImage(target) {
         const img = target.querySelector('img');
