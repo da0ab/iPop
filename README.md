@@ -56,16 +56,25 @@
 ```HTML
 <a href="images/photo/01.jpg" class="iPop-img"><img src="images/photo/t/01.jpg" alt="" title="Я не в группе"></a>
 ```
-- обернуть в **class="iPop-group""** для создания групп изображений
+- обернуть в **class="iPop-group""** для создания групп изображений любой вложенности
 - Счетчик изображений
 
 ```HTML
 <div class="iPop-group">                    
-<a href="images/photo/02.jpg" class="iPop-img"><img src="images/photo/t/02.jpg" alt="" title="Текст есть"></a>
-<a href="images/photo/03.jpg" class="iPop-img"><img src="images/photo/t/03.jpg" alt="" title=""></a>
+  <div>
+    <a href="images/photo/02.jpg" class="iPop-img"><img src="images/photo/t/02.jpg" alt="" title="Текст есть"></a>
+  </div>
+  <a href="images/photo/03.jpg" class="iPop-img"><img src="images/photo/t/03.jpg" alt="" title=""></a>
 </div>
 ```
+Группы с одним родителем формируются автоматически
 
+```HTML                   
+<div>
+  <a href="images/photo/02.jpg" class="iPop-img"><img src="images/photo/t/02.jpg" alt="" title="Текст есть"></a>
+  <a href="images/photo/03.jpg" class="iPop-img"><img src="images/photo/t/03.jpg" alt="" title=""></a>
+</div>
+```
 
 ## iPop-frame
 
