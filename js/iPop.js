@@ -92,22 +92,25 @@ class PopupOverlay {
         const loader = document.createElement('div');
         loader.className = 'iPopLoader';
         frame.appendChild(loader);
+
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = content.trim();
+
+        const iframeWrapper = tempDiv.querySelector('.iPop-up-video');
+        const iframe = iframeWrapper ? iframeWrapper.querySelector('iframe') : null;
         const img = tempDiv.querySelector('img');
-        const iframe = tempDiv.querySelector('iframe');
-        if (iframe) {
+
+        if (iframe && iframeWrapper) {
             iframe.addEventListener('load', () => {
                 loader.remove();
             });
-            frame.appendChild(iframe);
+            frame.appendChild(iframeWrapper);
         } else if (img) {
             img.addEventListener('load', () => {
                 loader.remove();
             });
             img.addEventListener('error', () => {
                 loader.remove();
-                console.error('Ошибка загрузки изображения');
             });
             while (tempDiv.firstChild) {
                 frame.appendChild(tempDiv.firstChild);
@@ -142,12 +145,15 @@ class PopupOverlay {
         if (!this.container) {
             this.createOverlay();
         }
+        document.body.classList.add('no-scroll');
+
     }
     close() {
         if (this.container) {
             this.container.remove();
             this.container = null;
         }
+        document.body.classList.remove('no-scroll');
     }
 }
 class ImageGallery {
@@ -238,8 +244,6 @@ class VideoHandler {
                 if (!link.innerHTML.trim()) {
                     link.innerHTML = this.generatePreview(details);
                 }
-            } else {
-                console.error("Не удалось определить сервис для ссылки:", videoUrl);
             }
         });
         document.addEventListener('click', (event) => {
@@ -284,10 +288,9 @@ class VideoHandler {
                 iframeSrc = `https://vk.com/video_ext.php?oid=${oid}&id=${id}&autoplay=1${details.startTime ? `&t=${details.startTime}` : ''}`;
                 break;
             default:
-                console.error("Неизвестный сервис:", details.service);
                 return '';
         }
-        return `<iframe src="${iframeSrc}" frameborder="0" allow="autoplay; encrypted-media; fullscreen;"></iframe>`;
+        return ` <div class="iPop-up-video"><iframe src="${iframeSrc}" frameborder="0" allow="autoplay; encrypted-media; fullscreen;"></iframe></div>`;
     }
 }
 class FrameHandler {
