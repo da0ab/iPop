@@ -6,7 +6,6 @@ a[class*=iPop] {
 }
 .no-scroll {
     overflow: hidden;
-    position: fixed;
     width: 100%;
 }
 .iPop-video {
